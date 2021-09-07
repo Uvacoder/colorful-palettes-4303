@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
-import rarity from '../assets/rarity.json';
-import axios from 'axios';
+import palettes from '../assets/palettesFormatted.json';
+
 import { GetStaticProps } from 'next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import IColorPalette from '../types/colorPalette';
@@ -14,10 +14,6 @@ import SmallPaletteCard from '../components/SmallPaletteCard';
 
 interface IndexPageProps {
   palettes: IColorPalette[];
-}
-
-interface ColorPaletteDTO {
-  [key: string]: [string, string, string, string, string]
 }
 
 export default function Home({ palettes }: IndexPageProps) {
@@ -139,19 +135,9 @@ export default function Home({ palettes }: IndexPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<IndexPageProps> = async () => {
-  const response = await axios.get<ColorPaletteDTO>('https://gist.githubusercontent.com/WilliamIPark/a6bf9a63541d83b0c360c16101067f68/raw/1fe39c1d1052e6f00b22020e6fa73a61d63ad13e/open-palette-index.json');
-
-  const palettesFormatted = Object.entries(response.data).map(([paletteName, colors], index) => ({ name: paletteName, colors, rarityScore: rarity[paletteName] ? 100 - rarity[paletteName] : '-1' }))
-
-  const filter = new PaletteFilter(palettesFormatted)
-
-  let palettesSortedByRarity = filter.sort(palettesFormatted)
-
-  palettesSortedByRarity.forEach((_, idx) => palettesSortedByRarity[idx].rarityPosition = idx + 1)
-  
   return {
     props: {
-      palettes: palettesSortedByRarity,
+      palettes: palettes as IColorPalette[],
     },
     revalidate: 5,
   };
