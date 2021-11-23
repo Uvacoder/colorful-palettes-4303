@@ -84,7 +84,7 @@ export default function Home({ palettes }: IndexPageProps) {
     <Flex px={['20px', '20px', "50px"]} py="30px" flexDir="column">
       <Flex alignItems="center" w="100%" flexDir={['column', 'column', 'column', 'row']}>
         <Box minW={{sm: '0px', md: '500px'}}>  
-          <Heading>OpenPalette explorer 🎨</Heading>
+          <Heading>abc OpenPalette explorer 🎨</Heading>
           <Text color="gray.400">Explore all awesome colors palettes from the OpenPalette project!</Text>
         </Box>
 
